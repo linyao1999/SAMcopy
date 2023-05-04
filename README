@@ -1,0 +1,38 @@
+# The system for atmospheric modelling (SAM) as used by the Yang Climate Group at NERSC
+
+This repository hosts a working version of SAM to be compiled for the KNL nodes of NERSC.
+
+Important:
+Try to familiarize with cori's documentation prior to use.
+
+* Compiled code and data should be stored in $SCRATCH. They purge files older than 12 weeks.
+
+
+I will try to document further in the next months.
+
+This branch has a Makefile that works on the KNL nodes of Cori.
+
+## The exp/ folder contains a folder called 64x64. As its name indicates each set of experiments you run with SAM should have their own folder in exp.
+
+exp/64x64 has some other inside folders:
+
+* init_snd contains initial soundings for different temperatures
+* srcmods contains modified source files: to modify the model you would copy the source file you are interested in from SRC, paste it here and then copy it. The submission script will substitute your modified files in place of the original ones. This also contains the definition of your domain in domain.f90.
+* run is where the submission scrip appears. The submission script contains instructions that are specific to the cori machine and the nodes you want to use, as well as your namelists
+* input contains files used for the initialization of the model, like the vertical levels used.
+
+Other files of interest:
+
+- readme: in here you could explain what experiment you want to run. In this example, Da Yang describes the modification he did to the file "buoyancy.f90"
+
+# Instructions to compile and run an experiment in Cori
+
+
+
+* TODO
+  * Add examples section
+  * Turn KNL and haswell into different branches adapted to use said architectures
+  * Think about updating to newest version
+
+
+** Contrubutions by Argel Ramirez Reyes **

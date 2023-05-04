@@ -1,0 +1,47 @@
+#! /bin/csh -f
+
+#----- README: 
+#----- run this Makefile to copy outputs from scratch ($SCRATCHDIR) to store (CCCSTOREDIR)
+#----- Each time cm1 is executed, a new output directory is created with the most recent scratch output folder.
+
+set liste =(  \
+SAM6103_expt5.15sei3.12  \
+SAM6103_expt5.15di8  )
+
+# set liste =(  \
+# SAM6103_expt5.15sefc1H.1  SAM6103_expt5.15sefc1H.8  SAM6103_expt5.15sefc1H.12  \
+# SAM6103_expt5.15sefsc1H.1 SAM6103_expt5.15sefsc1H.8 SAM6103_expt5.15sefsc1H.12 )
+
+
+foreach dirname ($liste)
+
+  echo  " dir $dirname "
+ setenv OutputDirName $dirname
+
+
+#--------------------------------------------------------#
+#------ You dont need to edit below this line -----------# 
+        echo "  **************************  "
+        echo "  Bonjour from cm1:   "
+        set nrestart = 0
+           while ( (-d $OutputDirName.$nrestart) != 0 ) 
+           echo "  $nrestart th dir $OutputDirName.$nrestart exists"
+           @ nrestart = $nrestart + 1
+           end 
+        echo "  **************************  "
+        mkdir   $OutputDirName.$nrestart
+        cp -r   $SCRATCHDIR/$OutputDirName/WORK/* $OutputDirName.$nrestart
+        echo "  $OutputDirName.$nrestart did not exist, I created it."
+        echo "  **************************  "
+
+end
+
+
+
+ 
+
+
+
+
+
+

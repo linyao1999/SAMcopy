@@ -1,0 +1,27 @@
+Experiments here are to examine the role of virtual effect in convective self-organization. In the srcmods DIR, I have put two modified source files--domain.f90 & buoyancy.f90. The domain is set to ~ 3000 km, and the vertical momentum equation is modified to account for different molecular weight of water vapor. 
+
+
+The equation used to calculate buoyancy is 
+
+B = g(T'/T0 + 0.61 qv' - qn - qp - p'/p0).  [see KHAIROUTDINOV & Randall 2003, JAS]
+
+In buoyancy.f90, the calculation is slightly different from the above equation.
+
+B      = g/T_{rho}0*(T_rho - T_{rho}0), 
+T_rho  = T*(1 - r_T + r/eps), where eps = Rd/Rv.
+
+Then we have B = g/T_{rho}0*{T'*(1 - r_T + r/eps) + T*(r'/eps - r_T')}. 
+
+To get the effect of different molecular weight, we make changes in the buoyancy calculation--adding a new parameter--alpha.
+
+T_rho  = T*{1 - alpha*(r_T - r/eps)}. Now we discuss the physical meaning of alpha. In the defaul equation, alpha = 1, where water vapor is still water vapor with molecular weight as 18. If alpha = 0, that means the water vapor is as heavy as the dry atmosphere. If alpha > 1, that means the water vapor is lighter than its current molecular weight. Of course, we have more constraints. Because M_{H2O} > 0, alpha cannot be smaller than -1.63.   
+
+
+[y = alpha*(1/eps - 1) = 1/eps' - 1, here eps' > 0]
+
+
+
+
+eps'   = M{H2O}/M{AIR}
+eps'   =  0.1   0.62(=eps) 1     2       10
+alpha  =  14.7  1          0     -0.82   -1.47
